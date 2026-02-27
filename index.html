@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description"
+          content="DARE: Distribution-Conditional Retrieval Embedding for Aligning LLM Agents with Statistical Ecosystems">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DARE: Aligning LLM Agents with the R Statistical Ecosystem via Distribution-Aware Retrieval</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: #fafaFA;
+        }
+
+        /* 加大 Section 之间的间距 */
+        .section {
+            padding: 2rem 1.5rem; /* 增加上下内边距 */
+        }
+
+        .hero-body {
+            padding-bottom: 1rem;
+        }
+
+        .publication-links{
+            margin-top: 20px;
+            padding-bottom: 0;
+        }
+
+        .publication-links .link-block span{
+            font-size: 15px !important;
+        }
+
+        .publication-links .link-block strong{
+            font-size: 16px !important;
+        }
+
+
+        .title.is-1 {
+            font-family: 'Google Sans', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .has-text-centered strong{
+            font-size: 19px !important;
+        }
+
+        .link-block img{
+            margin-top: 0 !important;
+        }
+
+        .hf-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .hf-icon img {
+          height: 1.1em;
+          display: block;
+        }
+
+        /* 加大子标题与内容的间距 */
+        .section-title {
+            font-family: 'Google Sans', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 3rem; /* 标题下方的空隙 */
+            text-align: center;
+            margin-top: 0 !important;
+        }
+
+        .link-block {
+            margin: 0 6px;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #4a4a4a;
+        }
+
+        /* Abstract Box 优化 */
+        .abstract-box {
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            text-align: justify;
+            line-height: 1.6;
+        }
+
+        /* 表格容器间距 */
+        .table-container {
+            overflow-x: auto;
+            margin: 40px 0;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .custom-table th, .custom-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        .custom-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .best-score {
+            font-weight: bold;
+            color: #d32f2f;
+        }
+
+        /* 图片居中及样式优化 */
+        .teaser-img {
+            display: block; /* 设为块级元素 */
+            margin: 0 auto 1.5rem auto; /* 左右自动实现居中，下边距 1.5rem */
+            max-width: 80%; /* 限制最大宽度 */
+            border-radius: 8px;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .caption {
+            font-size: 1rem;
+            color: #555;
+            text-align: center;
+            margin-top: 1rem;
+            margin-bottom: 4rem; /* 每个图片说明后留下较大间距 */
+            padding: 0 10%;
+            line-height: 1.4;
+        }
+
+        /* 统一页面内的图片间距 */
+        .container.is-max-desktop img {
+            margin-top: 2rem;
+        }
+
+        /*img {*/
+        /*    */
+        /*}*/
+    </style>
+</head>
+<body>
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered">
+                <div class="column has-text-centered">
+                    <h1 class="title is-1 publication-title">DARE: Aligning LLM Agents with the R Statistical Ecosystem
+                        via Distribution-Aware Retrieval</h1>
+                    <div>
+                        <!-- Title: Authors -->
+                        <strong>Maojun Sun</strong><sup>*1</sup>,
+                        <strong>Yue Wu</strong><sup>*1</sup>,
+                        <strong>Yifei Xie</strong><sup>*1</sup>,
+                        <strong>Ruijian Han</strong><sup>1</sup>,
+                        <strong>Binyan Jiang</strong><sup>1</sup>,
+                        <strong>Defeng Sun</strong><sup>2</sup>,
+                        <strong>Yancheng Yuan</strong><sup>2</sup>,
+                        <strong>Jian Huang</strong><sup>1,2</sup>
+
+                        <div>
+                            <sup>1</sup>Department of Data Science and Artificial Intelligence, <sup>2</sup>Department
+                            of Applied Mathematics,<br>
+                            The Hong Kong Polytechnic University
+<!--                            <em>* Equal contribution.</em>-->
+                            <br>
+                            {mj.sun, yue0301.wu, yifei.xie}@connect.polyu.hk<br>
+                            {ruijian.han, yancheng.yuan, j.huang}@polyu.edu.hk
+                        </div>
+
+                    </div>
+                    <div class="column has-text-centered publication-links">
+                        <!-- Paper -->
+                        <span class="link-block">
+                          <a href="#"
+                             class="button is-dark is-rounded is-outlined is-medium hf-btn coming-soon">
+
+                            <span class="icon">
+                              <img src="https://public.boxcloud.com/api/2.0/internal_files/804102418192/versions/860286295792/representations/png_paged_2048x2048/content/1.png?access_token=1!7_sAUKfRFAiY-BmxR9VRpPdWdYsJm7NzqvcnKuMk3JbnOnlezVyitBn8nPytweluDe5gJbux6y9l7fAXJHZwcWpzhlFbnNSti9qnR9vReXMhsLzhUGw7d5zx7MKofeqD7zuEh3ZbQcKoYn0Xr_YB0sCbh-RpgiTFrgaePqPc9tPwBclu-caN9QULOuUytZhmEIiepq6xR2WILvPdHRsaybKrHjNVBVPiPrOiZ2cIO2y8s-uYlaX6JZJkRqwdHU--JIaBTH2ohEKWJ6hv7BHpDGyk_ta8AeOCNrAsyhsYiKVmMUguRtu0Y3GaBpFd7ijE53TSARMdNLj8mF3CAMpPy9Y3R-bBq5t4pfJvU5_sVmqjHwhBnNWMu3EFrzIO-X7zlLcvZIKYtsyD3bzEBZtxrXaxjVFerz5fvpphN5Xi36gLLZ5VA68cXVjwqGZMAvm4mBw1xI64lDWuxcaj1cUO8G__Y5CZqrDDFj0kD0ZNohFVyPLmjdG8rawiVxFHwXn8VfTi9Mpco07GZs53k3EQ8vbyZRYm4HzuDsGUFtPJoXwvToqoloIQt755DitzETvPjlIZTnX2XyfWnx5dsXizbPgFnvycahG59vgwVbPrw5CEUgMeVs1tqdDT5wu4-SYApS1dPDSf54ZIe_yZpnPblSLN03mtW4uNX-baYGuGsTQ.&shared_link=https%3A%2F%2Fcornell.app.box.com%2Fv%2Farxiv-logomark-png&box_client_name=box-content-preview&box_client_version=3.23.0"
+                                   alt="arXiv" style="height:1.1em;">
+                            </span>
+
+                            <span><strong>Paper</strong> · Coming Soon</span>
+
+                          </a>
+                        </span>
+
+                        <!-- Model -->
+                        <span class="link-block">
+                          <a href="https://huggingface.co/Stephen-SMJ/DARE-R-Retriever"
+                             class="button is-dark is-rounded is-outlined is-medium hf-btn">
+
+                            <span class="icon hf-icon">
+                              <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg"
+                                   alt="HF">
+                            </span>
+                            <span><strong>Model</strong> · DARE-R-Retriever</span>
+
+                          </a>
+                        </span>
+
+                        <!-- Database -->
+                        <span class="link-block">
+                          <a href="https://huggingface.co/datasets/Stephen-SMJ/RPKB"
+                             class="button is-dark is-rounded is-outlined is-medium">
+                            <span class="icon">
+                              <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg"
+                                   alt="HF" style="height:1.1em;">
+                            </span>
+                            <span><strong>Database</strong> · RPKB</span>
+                          </a>
+                        </span>
+
+                        <!-- Code -->
+                        <span class="link-block">
+                          <a href="https://github.com/AMA-CMFAI/DARE"
+                             class="button is-dark is-rounded is-outlined is-medium">
+                            <span class="icon">
+                              <i class="fab fa-github"></i>
+                            </span>
+                            <span><strong>Code</strong> · GitHub</span>
+                          </a>
+                        </span>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+
+                <!-- Title: Abstract -->
+                <h2 class="section-title">Abstract</h2>
+                <div class="abstract-box">
+                    Large Language Model (LLM) agents can automate data-science workflows, but many rigorous
+                    statistical methods implemented in R remain underused because LLMs struggle with statistical
+                    knowledge and tool retrieval. Existing retrieval-augmented approaches focus on function-level
+                    semantics and ignore data distribution, producing suboptimal matches. We propose
+                    <b>DARE (Distribution-Aware Retrieval Embedding)</b>, a lightweight, plug-and-play retrieval model
+                    that incorporates data distribution information into function representations for R package
+                    retrieval. Our main contributions are: (i) <b>RPKB</b>, a curated R Package Knowledge Base derived
+                    from 8,191 high-quality CRAN packages; (ii) <b>DARE</b>, an embedding model that fuses
+                    distributional
+                    features with function metadata to improve retrieval relevance; and (iii) <b>RCodingAgent</b>, an
+                    R-oriented LLM agent for reliable R code generation and a suite of statistical analysis tasks for
+                    systematically evaluating LLM agents in realistic analytical scenarios. Empirically, <b>DARE</b>
+                    achieves an <b>NDCG@10 of 93.47%</b>, outperforming state-of-the-art open-source embeddings by up to
+                    <b>17%</b> on package retrieval while using substantially fewer parameters. Integrating DARE into
+                    RCodingAgent yields significant gains on downstream analysis tasks. This work helps narrow the
+                    gap between LLM automation and the mature R statistical ecosystem.
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <h2 class="section-title">Methods</h2>
+        <img src="compare.png" class="teaser-img">
+        <p class="caption">
+            <strong>Figure 1:</strong> DARE significantly improves retrieval accuracy compared with general-purpose
+            embedding models by incorporating distribution-aware representations.
+        </p>
+
+        <img src="dcre.png" class="teaser-img">
+        <p class="caption">
+            <strong>Figure 2:</strong> Overview of the DARE framework. DARE jointly models semantic intent and data
+            distribution constraints to enable reliable statistical function retrieval.
+        </p>
+
+
+        <img src="bench.png" class="teaser-img">
+        <p class="caption">
+            <strong>Figure 3:</strong> Pipline of Constructing Evaluation Tasks.
+        </p>
+
+        <img src="RCodingAgnt.png" class="teaser-img">
+        <p class="caption">
+            <strong>Figure 4:</strong> An example of integrating DARE into Agent.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <h2 class="section-title">Experimental Results</h2>
+
+        <div class="table-container">
+            <table class="custom-table">
+                <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Params</th>
+                    <th>NDCG@10</th>
+                    <th>MRR@10</th>
+                    <th>Recall@10</th>
+                    <th>Recall@1</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Snowflake/arctic-embed-l</td>
+                    <td>335M</td>
+                    <td>0.7932</td>
+                    <td>0.7510</td>
+                    <td>0.9235</td>
+                    <td>0.6549</td>
+                </tr>
+                <tr>
+                    <td>intfloat/e5-large-v2</td>
+                    <td>335M</td>
+                    <td>0.7513</td>
+                    <td>0.7086</td>
+                    <td>0.8838</td>
+                    <td>0.6152</td>
+                </tr>
+                <tr>
+                    <td>jina-embeddings-v2-base-en</td>
+                    <td>137M</td>
+                    <td>0.7429</td>
+                    <td>0.6965</td>
+                    <td>0.8873</td>
+                    <td>0.5969</td>
+                </tr>
+                <tr>
+                    <td>BAAI/bge-m3</td>
+                    <td>568M</td>
+                    <td>0.7308</td>
+                    <td>0.6843</td>
+                    <td>0.8758</td>
+                    <td>0.5847</td>
+                </tr>
+                <tr>
+                    <td>mxbai-embed-large-v1</td>
+                    <td>335M</td>
+                    <td>0.7068</td>
+                    <td>0.6565</td>
+                    <td>0.8639</td>
+                    <td>0.5508</td>
+                </tr>
+                <tr>
+                    <td>UAE-Large-V1</td>
+                    <td>335M</td>
+                    <td>0.7066</td>
+                    <td>0.6556</td>
+                    <td>0.8658</td>
+                    <td>0.5479</td>
+                </tr>
+                <tr>
+                    <td>gte-large-en-v1.5</td>
+                    <td>435M</td>
+                    <td>0.6639</td>
+                    <td>0.6122</td>
+                    <td>0.8257</td>
+                    <td>0.5040</td>
+                </tr>
+                <tr>
+                    <td>all-mpnet-base-v2</td>
+                    <td>110M</td>
+                    <td>0.6606</td>
+                    <td>0.6057</td>
+                    <td>0.8330</td>
+                    <td>0.4937</td>
+                </tr>
+                <tr>
+                    <td>Base Model (MiniLM)</td>
+                    <td>23M</td>
+                    <td>0.6127</td>
+                    <td>0.5553</td>
+                    <td>0.7936</td>
+                    <td>0.4412</td>
+                </tr>
+                <tr>
+                    <td><b>DARE (Ours)</b></td>
+                    <td><b>23M</b></td>
+                    <td class="best-score">0.9347</td>
+                    <td class="best-score">0.9176</td>
+                    <td class="best-score">0.9863</td>
+                    <td class="best-score">0.8739</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <img src="qps.png" class="teaser-img" style="width: 60%; margin-top: 80px;">
+        <p class="caption">
+            <strong>Figure 3:</strong> Efficiency comparison measured by queries-per-second (QPS). Despite its small
+            parameter size, DARE achieves both superior accuracy and fast retrieval speed.
+        </p>
+
+        <h3 class="title is-4 has-text-centered" style="margin-top: 4rem;">Downstream Agent Performance</h3>
+        <div class="table-container">
+            <table class="custom-table">
+                <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>RCodingAgent (w/o DARE)</th>
+                    <th>RCodingAgent with DARE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>claude-haiku-4.5</td>
+                    <td>6.25%</td>
+                    <td class="best-score">56.25% (50.00%)</td>
+                </tr>
+                <tr>
+                    <td>deepseek-v3.2</td>
+                    <td>18.75%</td>
+                    <td class="best-score">56.25% (37.50%)</td>
+                </tr>
+                <tr>
+                    <td>gpt-5.2</td>
+                    <td>25.00%</td>
+                    <td class="best-score">62.50% (37.50%)</td>
+                </tr>
+                <tr>
+                    <td>grok-4.1-fast</td>
+                    <td>18.75%</td>
+                    <td class="best-score">75.00% (56.25%)</td>
+                </tr>
+                <tr>
+                    <td>mimo-v2-flash</td>
+                    <td>12.50%</td>
+                    <td class="best-score">62.50% (50.00%)</td>
+                </tr>
+                <tr>
+                    <td>minimax-m2.1</td>
+                    <td>12.50%</td>
+                    <td class="best-score">68.75% (56.25%)</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div style="text-align:  center">
+            <a href="https://info.flagcounter.com/tw6M"><img
+                    src="https://s05.flagcounter.com/map/tw6M/size_m/txt_000000/border_CCCCCC/pageviews_1/viewers_1/flags_0/"
+                    alt="Flag Counter" border="0"></a>
+        </div>
+
+    </div>
+</section>
+
+
+</body>
+</html>
